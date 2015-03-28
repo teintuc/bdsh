@@ -1,0 +1,122 @@
+{EPITECH.}
+Projet		bdsh
+
+A realiser seul.
+Langage: SHell sh
+Repertoire de rendu: ~/../rendu/shell/bdsh/
+Nom de l'executable: bdsh.sh
+Ramassage et correction par moulinette
+Newsgroup : epitech.projs.ept2.bdsh
+Moulinette de test : dans /u/proj/bdsh/public/bdsh/
+------------------------------------------------------------
+
+Synopsis
+
+   bdsh.sh [-k] [-f <db_file>] (put (<clef> | $<clef>) (<valeur> | $<clef>) |
+                                del (<clef> | $<clef>) [<valeur> | $<clef>] |
+                                select [<expr> | $<clef>] )
+
+
+	Il s'agit d'écrire un script shell émulant les fonctionnalités simples
+ d'une base de données. Cette base sera contenue dans un unique fichier
+ "sh.db" dont on pourra éventuellement passer le nom en paramètre grâce à
+ l'option `-f'.
+
+   Les paramètres du script seront les suivants: 
+
+    - put <clef> <valeur> - Ajoute une clef <clef> contenant la valeur 
+    <valeur>. Si la clef existe déjà, la valeur est écrasée.
+    Rien n'est affiché.
+
+    - del <clef> [<valeur>] - Efface la clef <clef>. Si la valeur est ommise,
+    la clef reste présente sans contenu. Si la clef n'existe pas ou si la
+    valeur ne correspond pas à celle de la clef, il ne se passe rien.
+    Rien n'est affiché.
+
+    - select [<expr>] - Permet d'afficher les valeurs dont les clefs
+    matchent <expr>, ou toutes les valeurs si aucun paramètre n'est passé.
+    C'est le matching de la commande grep qui est utilisé. On utilisera
+    pour l'affichage l'ordre du fichier, qui sera l'ordre chronologique
+    d'insertion ou de modification.
+
+   Lorsqu'une valeur doit etre affichée, elle est seule sur une ligne.
+   Si l'option `-k' est activée, la clef doit aussi etre affichée de la
+   facon suivante :
+   <clef>=<valeur>
+   Pas d'espace ou autres caractères mis à part le '=' entre la clef sa valeur.
+
+   Il vous faudra également gérer :
+     ./bdsh.sh put <clef> $<clef_existante>
+     ./bdsh.sh put $<clef_1> $<clef_2>
+     ./bdsh.sh del <clef> $<clef>
+     ./bdsh.sh del $<clef_1> $<clef_2>
+     ./bdsh.sh select $<clef>
+
+    La commande select ne mélange pas les clefs et les expressions régulieres.
+    C'est le $ en debut d'expression qui détermine si c'est une clef ou non.
+
+     Exemple :  ./bdsh.sh put key1 val1
+                ./bdsh.sh put key2 '$key1'
+                ./bdsh.sh put '$key2' key1
+                ./bdsh.sh select "ey"
+                val1
+                val1
+                ./bdsh.sh select "1"
+                val1
+                key1
+                ./bdsh.sh select '$key2'
+                key1
+                ./bdsh.sh select '[2-9]$'
+                val1
+
+   Traitement correct des erreurs
+    messages : "Syntax error : Usage ...."
+               "No such key : ..."           pour les $<clef> non existantes
+               "No base found : file ..."
+    La premiere partie du message jusqu'a : (2 points) devra etre identique.
+
+
+   Vous ne pouvez utiliser que certaines commandes pour réaliser votre
+   programme. Afin de savoir si une commande est autorisée, connectez-vous
+   au serveur du bdsh grâce à la commande telnet, suivant le schéma suivant:
+
+    $ telnet maya 8421                    <== Pour se connecter au serveur
+    Trying 10.42.1.233...
+    Connected to maya.
+    Escape character is '^]'.
+    cat                                    <== La commande que vous voulez
+    Yes                                        utiliser dans votre bdsh
+    Connection closed by foreign host.
+    $
+
+   Les reponses possibles sont "Yes", "No", ou bien rien du tout si
+   vous mettez quelque chose qui n'est pas reconnu comme une commande.
+
+   Un fichier joint a ce sujet indique quelle machine est utilisée pour
+   faire tourner ce serveur (ce n'est pas toujours la machine maya).
+
+   Votre bdsh commencera obligatoirement par la ligne
+    #!/bin/sh
+   Pas de tcsh, ksh, csh ou tout autre forme de shell ou d'executable.
+   Ni votre shell de tek1 ( :-) ).
+
+
+*** Bonus ***
+    - reprogrammer cut en shellscript (et ne plus utiliser la commande cut ..)
+    - stocker la base de données dans le programme lui-même
+    - crypter les données (rien qu'en shell :-)
+
+    Pour faire valider vos options, créez dans votre répertoire de rendu
+    un fichier vide avec un des 3 noms suivants :
+         ".cut" ".internal" ".crypt"
+    en fonction de/des option(s) realisée(s).
+
+*** Utilisation de la moulinette ***
+
+    La moulinette cherche par defaut un programme ./bdsh.sh et le fichier
+    test.bdsh . Vous pouvez transmettre en parametre le nom d'un autre
+    fichier de test.
+
+    $> /u/proj/bdsh/public/bdsh/moul.pl /u/proj/bdsh/public/bdsh/test0-1.bdsh
+
+*** End ***
