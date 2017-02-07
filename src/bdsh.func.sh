@@ -36,3 +36,12 @@ do_delete () {
     error_parameters
   fi
 }
+
+do_update () {
+  if [ $# -eq 2 ]; then
+    echo $1$DELIMITER$2 >> $DATABASE_FILE
+  else
+    error_parameters
+  fi
+}
+
