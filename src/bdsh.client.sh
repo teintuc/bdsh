@@ -20,7 +20,10 @@ function handle_command()
       do_insert $2 $3
     ;;
     delete)
-      do_delete $2 $3
+      do_delete $2
+    ;;
+    update)
+      do_update $2 $3
     ;;
     quit)
       echo "Bye ... bye ..."
@@ -38,3 +41,4 @@ do
   read command
 	handle_command $command
 done
+
